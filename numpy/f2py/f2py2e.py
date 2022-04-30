@@ -18,7 +18,6 @@ import sys
 import os
 import pprint
 import re
-from pathlib import Path
 
 from . import crackfortran
 from . import rules
@@ -122,7 +121,6 @@ Options:
 
   --quiet          Run quietly.
   --verbose        Run with extra verbosity.
-  --skip-empty-wrappers   Only generate wrapper files when needed.
   -v               Print f2py version ID and exit.
 
 
@@ -180,7 +178,6 @@ def scaninputline(inputline):
     files, skipfuncs, onlyfuncs, debug = [], [], [], []
     f, f2, f3, f5, f6, f7, f8, f9, f10 = 1, 0, 0, 0, 0, 0, 0, 0, 0
     verbose = 1
-    emptygen = True
     dolc = -1
     dolatexdoc = 0
     dorestdoc = 0
@@ -252,8 +249,6 @@ def scaninputline(inputline):
             f7 = 1
         elif l[:15] in '--include-paths':
             f7 = 1
-        elif l == '--skip-empty-wrappers':
-            emptygen = False
         elif l[0] == '-':
             errmess('Unknown option %s\n' % repr(l))
             sys.exit()
@@ -303,7 +298,6 @@ def scaninputline(inputline):
             'Signature file "%s" exists!!! Use --overwrite-signature to overwrite.\n' % (signsfile))
         sys.exit()
 
-    options['emptygen'] = emptygen
     options['debug'] = debug
     options['verbose'] = verbose
     if dolc == -1 and not signsfile:
