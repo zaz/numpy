@@ -3469,9 +3469,9 @@ def std(a, axis=None, dtype=None, out=None, ddof=0, keepdims=np._NoValue, *,
         the same shape as the expected output but the type (of the calculated
         values) will be cast if necessary.
     ddof : int, optional
-        Means Delta Degrees of Freedom.  The divisor used in calculations
-        is ``N - ddof``, where ``N`` represents the number of elements.
-        By default `ddof` is zero.
+        "Delta Degrees of Freedom". The divisor used in calculations is
+        ``len(a) - ddof``. ``ddof=1`` applies Bessel's correction to give
+        the unbiased sample standard deviation.
     keepdims : bool, optional
         If this is set to True, the axes which are reduced are left
         in the result as dimensions with size one. With this option,
@@ -3611,9 +3611,9 @@ def var(a, axis=None, dtype=None, out=None, ddof=0, keepdims=np._NoValue, *,
         the same shape as the expected output, but the type is cast if
         necessary.
     ddof : int, optional
-        "Delta Degrees of Freedom": the divisor used in the calculation is
-        ``N - ddof``, where ``N`` represents the number of elements. By
-        default `ddof` is zero.
+        "Delta Degrees of Freedom". The divisor used in calculations is
+        ``len(a) - ddof``. ``ddof=1`` applies Bessel's correction to give
+        the unbiased sample variance; see notes.
     keepdims : bool, optional
         If this is set to True, the axes which are reduced are left
         in the result as dimensions with size one. With this option,
@@ -3650,7 +3650,8 @@ def var(a, axis=None, dtype=None, out=None, ddof=0, keepdims=np._NoValue, *,
     The mean is typically calculated as ``x.sum() / N``, where ``N = len(x)``.
     If, however, `ddof` is specified, the divisor ``N - ddof`` is used
     instead.  In standard statistical practice, ``ddof=1`` provides an
-    unbiased estimator of the variance of a hypothetical infinite population.
+    unbiased estimator of the variance of the hypothetical infinite population
+    from which the sample, a, was drawn; i.e., it applies Bessel's correction.
     ``ddof=0`` provides a maximum likelihood estimate of the variance for
     normally distributed variables.
 
